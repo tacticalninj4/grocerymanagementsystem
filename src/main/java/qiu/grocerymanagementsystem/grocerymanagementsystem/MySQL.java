@@ -4,10 +4,31 @@ import java.sql.*;
 
 public class MySQL {
 
+    public static String connectionURL = "jdbc:mysql://localhost:3306/grocerymanagement";
+    public static String mySQLusername = "root";
+    public static String mySQLpassword = "";
+
+    public static String getConnectionURL() {
+        return connectionURL;
+    }
+
+    public static String getMySQLusername() {
+        return mySQLusername;
+    }
+
+    public static String getMySQLpassword() {
+        return mySQLpassword;
+    }
+
+
+
+
+
+
 
     public boolean connectDB(){
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grocerymanagement", "root", "" );
+            Connection connection = DriverManager.getConnection(connectionURL, mySQLusername, mySQLpassword );
             if(connection != null){
                 System.out.println("Connected to Database");
                 connection.close();
@@ -23,7 +44,7 @@ public class MySQL {
     public void checkAndCreateAdmin(){
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grocerymanagement", "root", "" );
+            Connection connection = DriverManager.getConnection(connectionURL, mySQLusername, mySQLpassword );
             String createTableCredentials = "CREATE TABLE IF NOT EXISTS credential (\n" +
                     "  id int(11) NOT NULL AUTO_INCREMENT,\n" +
                     "  name varchar(300) NOT NULL,\n" +
@@ -84,7 +105,7 @@ public class MySQL {
     public String checkLogin(String userid, String password){
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grocerymanagement", "root", "" );
+            Connection connection = DriverManager.getConnection(connectionURL, mySQLusername, mySQLpassword );
 
             String getLoginCred= "SELECT * FROM credential WHERE userid = ?";
 
@@ -119,7 +140,7 @@ public class MySQL {
 
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grocerymanagement", "root", "" );
+            Connection connection = DriverManager.getConnection(connectionURL, mySQLusername, mySQLpassword );
             String getLoginCred= "SELECT * FROM credential WHERE userid = ?";
 
             PreparedStatement statement = connection.prepareStatement(getLoginCred);
@@ -155,7 +176,7 @@ public class MySQL {
     public boolean addItem(String name, float price, String sku){
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grocerymanagement", "root", "" );
+            Connection connection = DriverManager.getConnection(connectionURL, mySQLusername, mySQLpassword );
             String addItemSQL = "INSERT INTO inventory (name, price, sku) VALUES (?, ?, ?);";
             PreparedStatement statement = connection.prepareStatement(addItemSQL);
             statement.setString(1, name);
@@ -186,7 +207,7 @@ public class MySQL {
     public boolean deleteItem(String sku){
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grocerymanagement", "root", "" );
+            Connection connection = DriverManager.getConnection(connectionURL, mySQLusername, mySQLpassword );
             String delSQL = "DELETE FROM inventory WHERE sku = ?";
 
             PreparedStatement statement = connection.prepareStatement(delSQL);
@@ -213,7 +234,7 @@ public class MySQL {
     public String[] searchItem(String sku){
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grocerymanagement", "root", "" );
+            Connection connection = DriverManager.getConnection(connectionURL, mySQLusername, mySQLpassword );
             String searchQ = "SELECT * FROM inventory WHERE sku = ?";
 
             PreparedStatement statement = connection.prepareStatement(searchQ);

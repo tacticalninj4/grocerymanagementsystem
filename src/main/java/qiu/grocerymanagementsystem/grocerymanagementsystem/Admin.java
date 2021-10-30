@@ -68,7 +68,7 @@ public class Admin extends JFrame {
 
     private void reloadData(DefaultTableModel model){
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grocerymanagement", "root", "" );
+            Connection connection = DriverManager.getConnection( MySQL.getConnectionURL(), MySQL.getMySQLusername(), MySQL.getMySQLpassword() );
             String getInventorySQL = "SELECT * FROM inventory";
 
             Statement statement = connection.createStatement();
